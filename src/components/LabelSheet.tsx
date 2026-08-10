@@ -52,12 +52,11 @@ const LabelCell = memo(function LabelCell({
       renderBarcodeDataUrl({
         symbology: item.symbology,
         value: item.value,
-        text: item.label || undefined,
         width: appearance.moduleWidth,
         height: appearance.height,
         fontSize: appearance.fontSize,
         margin: appearance.margin,
-        showText: appearance.showText,
+        showText: false, // el texto se dibuja como HTML, sin duplicados
         lineColor: appearance.lineColor,
       }),
     [item, appearance]
@@ -77,7 +76,7 @@ const LabelCell = memo(function LabelCell({
           />
         )}
       </div>
-      <div className="label-value">{item.value}</div>
+      {appearance.showText && <div className="label-value">{item.value}</div>}
 
       {variant === "screen" && (
         <div className="cell-actions">

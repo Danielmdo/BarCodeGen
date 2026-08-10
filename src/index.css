@@ -608,6 +608,12 @@ textarea.input {
   flex-wrap: wrap;
 }
 
+.sheet-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .template-picker {
   display: flex;
   gap: 8px;

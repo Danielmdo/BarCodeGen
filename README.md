@@ -13,6 +13,7 @@ y está lista para desplegar en **Vercel**.
 - **Generación masiva**: pega una lista de códigos (uno por línea) y define la cantidad por código.
 - **Plantillas de etiquetas A4** en milímetros: Grande, 2 × 7, 3 × 8 y 4 × 6.
 - **Impresión optimizada**: CSS de impresión que imprime solo las etiquetas en A4 vertical sin márgenes.
+- **Exportar a PDF**: descarga la hoja como PDF real (A4, medidas en mm) con un solo clic.
 - **Personalización**: ancho de barra, altura, tamaño de texto, margen, color y texto personalizado por etiqueta.
 - **Descarga PNG** de alta resolución de cada código.
 - Diseño responsivo y en español.

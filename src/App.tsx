@@ -4,7 +4,7 @@ import { ControlsPanel } from "./components/ControlsPanel";
 import { EditItemModal, type ItemPatch } from "./components/EditItemModal";
 import { LabelSheet, type SheetItem } from "./components/LabelSheet";
 import { PreviewCard } from "./components/PreviewCard";
-import { BarcodeIcon, PrinterIcon, TrashIcon } from "./components/icons";
+import { BarcodeIcon, FileTextIcon, PrinterIcon, TrashIcon } from "./components/icons";
 import {
   LABEL_TEMPLATES,
   proposeCode,
@@ -13,6 +13,7 @@ import {
   type BarcodeSettings,
   type LabelTemplate,
 } from "./lib/barcode";
+import { exportSheetToPdf } from "./lib/pdf";
 
 export const DEFAULT_SETTINGS: BarcodeSettings = {
   value: "123456789012",
@@ -44,6 +45,7 @@ export default function App() {
   const [batchText, setBatchText] = useState("");
   const [batchQty, setBatchQty] = useState(1);
   const [toast, setToast] = useState<string | null>(null);
+  const [exportingPdf, setExportingPdf] = useState(false);
   const [editingItem, setEditingItem] = useState<SheetItem | null>(null);
   const [printOverride, setPrintOverride] = useState<{
     items: SheetItem[];
@@ -195,6 +197,19 @@ export default function App() {
     window.setTimeout(() => window.print(), 80);
   }
 
+  async function handleExportPdf() {
+    if (!sheetItems.length || exportingPdf) return;
+    setExportingPdf(true);
+    try {
+      await exportSheetToPdf(sheetItems, template, cellAppearance);
+      setToast("PDF descargado");
+    } catch {
+      setToast("No se pudo generar el PDF");
+    } finally {
+      setExportingPdf(false);
+    }
+  }
+
   function printSingle() {
     if (validationError) return;
     setPrintOverride({ items: [makeItem(settings.value.trim())], template: SINGLE_TEMPLATE });
@@ -299,13 +314,24 @@ export default function App() {
                       </button>
                     ))}
                   </div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={printSheet}
-                    disabled={!sheetItems.length}
-                  >
-                    <PrinterIcon size={16} /> Imprimir
-                  </button>
+                  <div className="sheet-actions">
+                    <button
+                      className="btn btn-outline"
+                      onClick={handleExportPdf}
+                      disabled={!sheetItems.length || exportingPdf}
+                      title="Descargar la hoja como PDF"
+                    >
+                      <FileTextIcon size={16} />
+                      {exportingPdf ? "Generando…" : "Guardar PDF"}
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={printSheet}
+                      disabled={!sheetItems.length}
+                    >
+                      <PrinterIcon size={16} /> Imprimir
+                    </button>
+                  </div>
                 </div>
 
                 {sheetItems.length === 0 ? (
