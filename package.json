@@ -1,0 +1,25 @@
+{
+  "name": "barcode-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Generador de códigos de barras e impresión de etiquetas. React + Vite, listo para Vercel.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "jsbarcode": "^3.11.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/jsbarcode": "^3.11.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
+}
